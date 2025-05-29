@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Event Detector</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 30px;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 300px;
+    }
+    #log {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f1f1f1;
+      border: 1px solid #ccc;
+      max-width: 400px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Form Event Detector</h2>
+
+<form id="testForm">
+  <input type="text" id="name" placeholder="Enter your name" /><br>
+  <input type="email" id="email" placeholder="Enter your email" /><br>
+  <select id="selectBox">
+    <option value="">Choose option</option>
+    <option value="one">One</option>
+    <option value="two">Two</option>
+  </select><br>
+  <button type="submit">Submit</button>
+</form>
+
+<div id="log">Form event log will appear here...</div>
+
+<script>
+  const log = document.getElementById("log");
+  const form = document.getElementById("testForm");
+
+  function logEvent(eventName) {
+    log.innerHTML += `Event Fired: <b>${eventName}</b><br>`;
+  }
+
+  // Add event listeners
+  form.addEventListener("focus", () => logEvent("focus"), true);
+  form.addEventListener("blur", () => logEvent("blur"), true);
+  form.addEventListener("change", () => logEvent("change"), true);
+  form.addEventListener("input", () => logEvent("input"), true);
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    logEvent("submit");
+  }, true);
+</script>
+
+</body>
+</html>

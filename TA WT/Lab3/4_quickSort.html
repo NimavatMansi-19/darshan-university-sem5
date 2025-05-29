@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Sort Algorithm</title>
+</head>
+<body>
+  <script>
+    function quickSort(K, LB, UB) {
+      let I, J, KEY, FLAG;
+
+      if (LB < UB) {
+        I = LB;
+        J = UB + 1;
+        KEY = K[LB];
+        FLAG = true;
+
+        while (FLAG) {
+          // Move I to the right
+          do {
+            I = I + 1;
+          } while (I <= UB && K[I] < KEY);
+
+          // Move J to the left
+          do {
+            J = J - 1;
+          } while (K[J] > KEY);
+
+          if (I < J) {
+            // Swap K[I] and K[J]
+            [K[I], K[J]] = [K[J], K[I]];
+          } else {
+            FLAG = false;
+          }
+        }
+
+        // Swap pivot (K[LB]) with K[J]
+        [K[LB], K[J]] = [K[J], K[LB]];
+
+        // Recursive calls
+        quickSort(K, LB, J - 1);
+        quickSort(K, J + 1, UB);
+      }
+    }
+
+    // Input
+    const n = parseInt(prompt("Enter array size:"));
+    const arr = [];
+
+    for (let i = 0; i < n; i++) {
+      arr.push(parseInt(prompt(`Enter element ${i + 1}:`)));
+    }
+
+    quickSort(arr, 0, arr.length - 1);
+
+    document.write("Sorted Array: " + arr.join(", "));
+  </script>
+</body>
+</html>

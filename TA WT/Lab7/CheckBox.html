@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkbox Roll Numbers</title>
+</head>
+<body>
+
+  <h3>Select Roll Numbers:</h3>
+  <input type="checkbox" value="101" onclick="showSelected()"> 101<br>
+  <input type="checkbox" value="102" onclick="showSelected()"> 102<br>
+  <input type="checkbox" value="103" onclick="showSelected()"> 103<br>
+  <input type="checkbox" value="104" onclick="showSelected()"> 104<br>
+  <input type="checkbox" value="105" onclick="showSelected()"> 105<br>
+
+  <p><b>Selected Roll Numbers:</b> <span id="result">None</span></p>
+
+  <script>
+    function showSelected() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let selected = [];
+
+      for (let i of checkboxes) {
+        if (i.checked) {
+          selected.push(i.value);
+        }
+      }
+
+      document.getElementById("result").textContent = selected.length ? selected.join(", ") : "None";
+    }
+  </script>
+
+</body>
+</html>

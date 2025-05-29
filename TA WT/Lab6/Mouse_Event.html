@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events</title>
+</head>
+<body>
+    <button id="btn">Submit</button>
+    <script>
+        let a=document.getElementById("btn");
+        a.addEventListener("click",()=>{
+            console.log("btn clicked");
+        })
+         a.addEventListener("dblclick",()=> {
+            console.log("btn dblclicked");
+        });
+        a.addEventListener("mouseenter",()=> {
+            console.log("btn mouseEnter");
+      });
+        a.addEventListener("mouseout",()=> {
+            console.log("btn mouseout");
+        });
+        a.addEventListener("mousemove",()=> {
+            console.log("btn mousemove");
+
+        });
+        a.addEventListener("mouseover",()=> {
+            console.log("btn mouseover");
+       });
+        
+    </script>
+</body>
+</html>

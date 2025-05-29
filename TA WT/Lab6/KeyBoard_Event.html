@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Event Detector</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding-top: 100px;
+    }
+    #output {
+      font-size: 20px;
+      margin-top: 20px;
+      color: darkblue;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Press any key to see which event is fired</h2>
+
+<div id="output">Waiting for key event...</div>
+
+<script>
+  const output = document.getElementById("output");
+
+  document.addEventListener("keydown", function(event) {
+    output.innerText = `KeyDown Event Fired: ${event.key}`;
+  });
+
+  document.addEventListener("keypress", function(event) {
+    output.innerText = `KeyPress Event Fired: ${event.key}`;
+  });
+
+  document.addEventListener("keyup", function(event) {
+    output.innerText = `KeyUp Event Fired: ${event.key}`;
+  });
+</script>
+
+</body>
+</html>
