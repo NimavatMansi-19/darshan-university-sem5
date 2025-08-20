@@ -77,7 +77,7 @@ function App() {
     <div>
       <h2>Fruits List</h2>
       <ul>
-        {fruits.map((fruit, index) => (
+        {fruits.map((fruit, index) => ( //<= if you want to render html inside jsx then use () else {}
           <li key={index}>{fruit}</li>
         ))}
       </ul>
