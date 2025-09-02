@@ -55,7 +55,7 @@ export default function App() {
 ```jsx
 import { useState } from "react";
 
-const Login = ({ login }) => {
+function Login({login}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -101,7 +101,7 @@ export default Login;
 ## 📄 components/Dashboard.js
 
 ```jsx
-const Dashboard = ({ user, logout }) => {
+function Dashboard ({ user, logout })  {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-green-100">
       <h1 className="text-2xl font-bold mb-4">
