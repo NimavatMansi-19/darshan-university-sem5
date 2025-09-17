@@ -29,13 +29,16 @@ src/
 ### 📌 context/UserContext.js
 
 ```javascript
-import { createContext, useState } from "react";
+import { createContext, useState } from "react"
+
+// Import after defining (to avoid circular imports)
+import Login from "../components/Login";
+import Dashboard from "../components/Dashboard";
 
 // Create Context
 export const UserContext = createContext();
 
-// Simple wrapper with context provider
-export const UserContextWrapper = ({ children }) => {
+export const UserContextWrapper = () => {
   const [user, setUser] = useState(null);
 
   const login = (username, password) => {
@@ -48,12 +51,15 @@ export const UserContextWrapper = ({ children }) => {
 
   const logout = () => setUser(null);
 
+  // Instead of children, decide what to render
   return (
     <UserContext.Provider value={{ user, login, logout }}>
-      {children}
+      {user ? <Dashboard /> : <Login />}
     </UserContext.Provider>
   );
 };
+
+
 ```
 ### 📌 components/Login.js
 
@@ -61,54 +67,46 @@ export const UserContextWrapper = ({ children }) => {
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-const Login = () => {
+export default function Login() {
   const { login } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleLogin = () => {
     const success = login(username, password);
-    if (!success) {
-      setError("Invalid credentials!");
-    }
+    if (!success) setError("Invalid username or password");
+    else setError("");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-2xl shadow-md w-80"
+    <div className="p-4 flex flex-col gap-2">
+      <h2 className="text-xl font-bold">Login</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className="border px-2 py-1 rounded"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="border px-2 py-1 rounded"
+      />
+      <button
+        onClick={handleLogin}
+        className="px-3 py-1 bg-blue-500 text-white rounded"
       >
-        <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          className="w-full p-2 mb-3 border rounded"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 mb-3 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          Login
-        </button>
-      </form>
+        Login
+      </button>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
-};
+}
 
-export default Login;
 ```
 
 ### 📌 components/Dashboard.js
@@ -117,25 +115,22 @@ export default Login;
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-const Dashboard = () => {
+export default function Dashboard() {
   const { user, logout } = useContext(UserContext);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-green-100">
-      <h1 className="text-2xl font-bold mb-4">
-        Welcome, {user?.username} 🎉
-      </h1>
+    <div className="p-4">
+      <h2 className="text-xl font-bold">Welcome, {user.username}!</h2>
       <button
         onClick={logout}
-        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        className="px-3 py-1 bg-red-500 text-white rounded mt-2"
       >
         Logout
       </button>
     </div>
   );
-};
+}
 
-export default Dashboard;
 ```
 
 ### 📌 App.js
@@ -143,19 +138,14 @@ export default Dashboard;
 ```javascript
 import { useContext } from "react";
 import { UserContext, UserContextWrapper } from "./context/UserContext";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
 
-function AppContent() {
-  const { user } = useContext(UserContext);
-  return user ? <Dashboard /> : <Login />;
-}
+
+
 
 export default function App() {
   return (
-    <UserContextWrapper>
-      <AppContent />
-    </UserContextWrapper>
+    <UserContextWrapper />
+     
   );
 }
 ```
